@@ -36,27 +36,29 @@ void setup()
   
 void loop()
 {
-  int value = readLight();
-  sound(value);
-  convertBinary(value);
+  int value = readLight();//Armazena o valor lido pelo LDR
+  sound(value);//Usa o valor lido pelo LDR para reproduzir som correspondente com o intervalo de 0-15
+  convertBinary(value);//Converte o valor lido pelo LDR para binário
   
+  //Acende as luzes de acordo com o valor correspondente em binário
   if(binario[3] == 1){
-    digitalWrite(green, 1);
+    digitalWrite(green, 1);//Luz Verde Acende
   }else{digitalWrite(green, 0);}
   if(binario[2] == 1){
-    digitalWrite(yellow, 1);
+    digitalWrite(yellow, 1);//Luz Amarela Acende
   }else{digitalWrite(yellow, 0);}
   if(binario[1] == 1){
-    digitalWrite(blue, 1);
+    digitalWrite(blue, 1);//Luz Azul Acende
   }else{digitalWrite(blue, 0);}
   if(binario[0] == 1){
-    digitalWrite(white, 1);
+    digitalWrite(white, 1);//Luz Branca Acende
   }else{digitalWrite(white, 0);}
   
 
   delay(100);
 }
 
+//Converte o valor do LDR para binario
 void convertBinary(int resultado)
 {
   for(int i=3; i>-1; i--){  
@@ -71,17 +73,15 @@ void convertBinary(int resultado)
   }
 }
 
+//Lê e transforma o valor do LDR em um intervalo de 0-15
 int readLight()
 {
   valorldr=analogRead(ldr);//Lê o valor do sensor ldr e armazena na variável valorldr
 
-  //Serial.print("Valor lido pelo LDR = ");//Imprime na serial a mensagem Valor lido pelo LDR
-  //Serial.println(valorldr);//Imprime na serial os dados de valorldr
+  Serial.print("Valor lido pelo LDR = ");//Imprime na serial a mensagem Valor lido pelo LDR
+  Serial.println(valorldr);//Imprime na serial os dados de valorldr
 
   int resultado = (valorldr/273);//Converte o valorldr para um intervalo de 15 valores.
-  //Serial.print("res: ");
-  //Serial.println(resultado);
-
   return resultado;
 }
 
@@ -94,17 +94,19 @@ void sound(int valor){
   if(digitalRead(button2) == LOW){
     armazenaNota[indice] = notes[valor];
     
+    Serial.print("Nota armazenada:");
     Serial.print(indice);
     Serial.print(": ");
     Serial.println(armazenaNota[indice]);
     indice++;
   }
 
+  //Toca as notas armazenadas no vetor
   if(digitalRead(button1) == LOW){ // Se o botão for pressionado
-    for(int i=0; i<100; i++){
+    for(int i=0; i<50; i++){
       tone(buzzer, armazenaNota[i]);
-      delay(100);
-      Serial.print("tocando ");
+      delay(300);
+      Serial.print("Tocando Nota: ");
       Serial.println(armazenaNota[i]);
     }
   }
@@ -113,24 +115,5 @@ void sound(int valor){
   noTone(buzzer);
 }
 
-/*
-void anthem()
-{
-  int indice = 0;
-  for (int Nota = 0; Nota < 230; Nota++) {//o número 80 indica quantas notas tem a nossa matriz.
-    int tempo = compasso/tempoNotas[Nota]; //Tempo = compasso dividido pela indicação da matriz tempoNotas.
-    tone(buzzer, melodia[Nota],tempo); //Toca a nota indicada pela matriz melodia durante o tempo.
-    if(digitalRead(button2) == LOW){
-      int notaArmazenada = melodia[Nota];
-      Serial.println(notaArmazenada);
-      armazenadas[indice] = notaArmazenada;
-    }
-    indice++;
-    // Para distinguir as notas adicionamos um tempo entre elas (tempo da nota + 20%).
-    delay(tempo*1.2);
-  }
-}
-
-*/
 
 
