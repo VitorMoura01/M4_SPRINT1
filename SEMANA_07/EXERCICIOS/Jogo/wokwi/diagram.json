@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "author": "Gabriela Matias",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-esp32-s3-devkitc-1", "id": "esp", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 87.11,
+      "left": 128.4,
+      "attrs": { "value": "330" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 64.92,
+      "left": 128.98,
+      "attrs": { "value": "330" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": 3.96,
+      "left": 199.54,
+      "attrs": { "color": "limegreen", "flip": "1" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": 54.02,
+      "left": 194.08,
+      "attrs": { "color": "red", "flip": "1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "r1:2", "led2:A", "red", [ "v0" ] ],
+    [ "led2:C", "esp:GND.4", "black", [ "v0" ] ],
+    [ "esp:40", "r1:1", "red", [ "h0" ] ],
+    [ "r2:2", "led1:A", "green", [ "v0" ] ],
+    [ "r2:1", "esp:42", "green", [ "v0" ] ],
+    [ "esp:GND.4", "led1:C", "black", [ "h0" ] ]
+  ]
+}
